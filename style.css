@@ -1,0 +1,86 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+  
+  body {
+    background-color: #000;
+  }
+
+
+
+  body {
+    background-image: url("picture\ 1.webp");
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+  }
+
+  .container {
+    width: 50%;
+    margin: 0 auto;
+  }
+  
+  
+  
+  header {
+    text-align: center;
+    padding: 40px 0;
+  }
+  
+  .game-title {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 96px;
+    color: #fff;
+    text-shadow: 4px 4px 8px rgba(0, 0, 0, 0.5);
+    position: absolute;
+    top: 20%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 1;
+  }
+  
+  
+  
+  main {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: calc(100vh - 160px);
+  }
+  
+  .button-section {
+    text-align: center;
+  }
+  
+
+  .game-button {
+    display: block;
+    width: 200px;
+    height: 40px;
+    margin-bottom: 20px;
+    background-color: #fff;
+    color: #000;
+    border: none;
+    border-radius: 5px;
+    font-size: 18px;
+    font-weight: bold;
+    text-transform: uppercase;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+    transition: background-color 0.2s ease-in-out;
+  }
+  
+  
+  .game-button:hover {
+    background-color: #444;
+    cursor: pointer;
+  }
+  
+  #trail {
+    position: absolute;
+    top: 0;
+    left: 0;
+    pointer-events: none;
+  }
+  

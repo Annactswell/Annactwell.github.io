@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ground Walker</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      background-color: #000;
+    }
+    canvas {
+      border: 2px solid #fff;
+    }
+  </style>
+</head>
+<body>
+  <canvas id="gameCanvas" width="400" height="400"></canvas>
+  <script>
+    const canvas = document.getElementById('gameCanvas');
+    const ctx = canvas.getContext('2d');
+    
+    // Load the player image
+    const playerImage = new Image();
+    playerImage.src = "player.png";  // Replace with the path to your player image
+    
+    // Draw the ground
+    function drawGround() {
+      ctx.beginPath();
+      ctx.moveTo(0, canvas.height / 2);
+      ctx.lineTo(canvas.width, canvas.height / 2);
+      ctx.strokeStyle = '#fff';
+      ctx.stroke();
+      ctx.closePath();
+    }
+    
+    // Draw the player
+    function drawPlayer(x, y) {
+      ctx.drawImage(playerImage, x - 20, y - 20, 40, 40);
+    }
+    
+    let x = canvas.width / 2;
+    let y = canvas.height / 2;
+    
+    // Handle keyboard input
+    document.addEventListener('keydown', function(event) {
+      if (event.key === 'a') {
+        x -= 5;
+      } else if (event.key === 'd') {
+        x += 5;
+      } else if (event.key === 'w') {
+        y -= 5;
+      } else if (event.key === 's') {
+        y += 5;
+      }
+      drawFrame();
+    });
+    
+    // Draw the frame
+    function drawFrame() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      drawGround();
+      drawPlayer(x, y);
+    }
+    
+    // Wait for the player image to load before drawing the frame
+    playerImage.onload = function() {
+      drawFrame();
+    };
+  </script>
+</body>
+</html>
