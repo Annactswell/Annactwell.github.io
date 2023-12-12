@@ -1,77 +1,103 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Ground Walker</title>
   <style>
     body {
-      margin: 0;
-      padding: 0;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-      background-color: #000;
+      background-color: black;
+      color: white;
+      font-family: Arial, sans-serif;
+      font-size: 24px;
+      text-align: center;
+      padding-top: 200px;
+      position: relative;
+      overflow: hidden;
     }
-    canvas {
-      border: 2px solid #fff;
+
+    .text-effect {
+      animation: textEffect 0.5s linear infinite alternate;
+    }
+
+    @keyframes textEffect {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    .star {
+    position: absolute;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    animation: moveStar linear infinite, glowStar 1s ease-in-out infinite alternate;
+    filter: brightness(100%); /* 增加星星整体亮度 */
+}
+
+    .star-container {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+    }
+
+    .star {
+      position: absolute;
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      animation: moveStar linear infinite, glowStar 1s ease-in-out infinite alternate;
+    }
+
+    @keyframes moveStar {
+      0% { transform: translate(0, 0); }
+      100% { transform: translate(100vw, 100vh); }
+    }
+
+    @keyframes glowStar {
+      0% { box-shadow: 0 0 5px #fff, 0 0 20px #fff, 0 0 40px #fff; }
+      100% { box-shadow: 0 0 10px #fff, 0 0 30px #fff, 0 0 60px #fff; }
     }
   </style>
 </head>
 <body>
-  <canvas id="gameCanvas" width="400" height="400"></canvas>
+  <div id="storyText" class="text-effect"></div>
+  <div id="starContainer" class="star-container"></div>
+
   <script>
-    const canvas = document.getElementById('gameCanvas');
-    const ctx = canvas.getContext('2d');
-    
-    // Load the player image
-    const playerImage = new Image();
-    playerImage.src = "player.png";  // Replace with the path to your player image
-    
-    // Draw the ground
-    function drawGround() {
-      ctx.beginPath();
-      ctx.moveTo(0, canvas.height / 2);
-      ctx.lineTo(canvas.width, canvas.height / 2);
-      ctx.strokeStyle = '#fff';
-      ctx.stroke();
-      ctx.closePath();
-    }
-    
-    // Draw the player
-    function drawPlayer(x, y) {
-      ctx.drawImage(playerImage, x - 20, y - 20, 40, 40);
-    }
-    
-    let x = canvas.width / 2;
-    let y = canvas.height / 2;
-    
-    // Handle keyboard input
-    document.addEventListener('keydown', function(event) {
-      if (event.key === 'a') {
-        x -= 5;
-      } else if (event.key === 'd') {
-        x += 5;
-      } else if (event.key === 'w') {
-        y -= 5;
-      } else if (event.key === 's') {
-        y += 5;
+    var storyText = "该文本用于测试该文本用于测试该文本用于测试";
+    var currentIndex = 0;
+    var storyElement = document.getElementById("storyText");
+
+    function showNextCharacter() {
+      if (currentIndex < storyText.length) {
+        storyElement.innerHTML += storyText.charAt(currentIndex);
+        currentIndex++;
+        setTimeout(showNextCharacter, 50); // 延迟显示下一个字符的时间
       }
-      drawFrame();
-    });
-    
-    // Draw the frame
-    function drawFrame() {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-      drawGround();
-      drawPlayer(x, y);
     }
-    
-    // Wait for the player image to load before drawing the frame
-    playerImage.onload = function() {
-      drawFrame();
-    };
+
+    showNextCharacter();
+
+    function createStars() {
+      var numStars = 100; // 星星的数量
+      var starContainer = document.getElementById("starContainer");
+      var sceneWidth = window.innerWidth;
+      var sceneHeight = window.innerHeight;
+
+      for (var i = 0; i < numStars; i++) {
+        var star = document.createElement('div');
+        star.className = 'star';
+        star.style.top = Math.floor(Math.random() * sceneHeight) + 'px';
+        star.style.left = Math.floor(Math.random() * sceneWidth) + 'px';
+        star.style.width = Math.floor(Math.random() * 8 + 2) + 'px'; // 随机设置星星的宽度
+        star.style.height = star.style.width; // 保持宽高一致
+        star.style.animationDuration = (Math.random() * 2 + 1) + 's'; // 随机设置动画周期
+        star.style.filter = 'brightness(' + (Math.random() * 2000 + 1000) + '%)'; // 随机设置亮度
+
+        starContainer.appendChild(star);
+      }
+    }
+
+    createStars();
   </script>
 </body>
 </html>
