@@ -4,8 +4,7 @@ const ctx = canvas.getContext('2d');
 canvas.width = window.innerWidth;
 canvas.height = window.innerHeight;
 
-let mouseX = 0;
-let mouseY = 0;
+let mouseX = 0, mouseY = 0;
 
 function updateMousePos(event) {
   mouseX = event.clientX;
@@ -13,14 +12,18 @@ function updateMousePos(event) {
 }
 
 document.addEventListener('mousemove', updateMousePos);
+
 class Particle {
     constructor() {
       this.x = mouseX;
       this.y = mouseY;
-      this.vx = (Math.random() - 0.5) * 2;
-      this.vy = (Math.random() - 0.5) * 2;
+
+      this.vx = (Math.random() - 0.5) * 1;
+      this.vy = (Math.random() - 0.5) * 1;
+      
       this.size = Math.random() * 8 + 2;
-      this.color = `rgba(255, 255, 255, 0.8)`;
+
+      this.color = 'rgba(255, 255, 255, 0.8)';
       this.opacity = 1;
       this.outerOpacity = 0.6;
     }
@@ -48,16 +51,11 @@ class Particle {
         ctx.fillStyle = `rgba(255, 255, 255, ${this.opacity * 0.8})`;
         ctx.fill();
       }
-      
-
-  
+    
     get isDead() {
       return this.opacity < 0.01 || this.size < 0.5;
     }
   }
-  
-  
-
 const particles = [];
 
 function spawnParticle() {
